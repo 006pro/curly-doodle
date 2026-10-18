@@ -31,7 +31,7 @@ course API endpoint) are recorded in `environment.txt`.
 ## Layout
 
 ```
-capstone-submission/
+./   (repository root)
 ├── README.md                 this index
 ├── environment.txt           OS, Python, venv setup, deviations
 ├── reflection-brief.md       completed brief

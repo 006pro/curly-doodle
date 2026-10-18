@@ -7,7 +7,7 @@
 > it from your artifacts — a reviewer should be able to find it. Answers that are correct in the
 > abstract but cite nothing do not meet the bar. Keep it short and specific.
 
-All paths below are relative to this `capstone-submission/` folder.
+All paths below are relative to the root of this evidence pack (the repository root).
 
 ---
 
