@@ -1,0 +1,51 @@
+$ mortgage-extract ../../../capstone-submission/perturbations/inputs/income_sum_corrected.txt --mode record --model claude-haiku-4-5-20251001 -v
+# live, endpoint https://claude.vocareum.com, 2026-10-18T10:05:38Z
+httpx2: HTTP Request: POST https://claude.vocareum.com/v1/messages "HTTP/1.1 200 OK"
+mortgage_extractor.pipeline: classify: model=claude-haiku-4-5-20251001 in=1612 out=95 type=income_verification
+httpx2: HTTP Request: POST https://claude.vocareum.com/v1/messages "HTTP/1.1 200 OK"
+mortgage_extractor.pipeline: extract: model=claude-haiku-4-5-20251001 in=3771 out=272 tool=extract_income_verification
+{
+  "extraction": {
+    "borrower": {
+      "full_name": "Marcus T. Hollingsworth",
+      "coborrower_name": null,
+      "ssn_last4": null,
+      "date_of_birth": null,
+      "email": null,
+      "phone": null
+    },
+    "property": {
+      "address": "<UNKNOWN>",
+      "property_type": "other",
+      "property_type_detail": null,
+      "occupancy_type": null,
+      "occupancy_type_detail": null,
+      "year_built": null,
+      "gross_living_area_sqft": null,
+      "hoa_dues_monthly": null,
+      "appraised_value": null
+    },
+    "loan": {
+      "amount": 0.0,
+      "term_months": null,
+      "interest_rate": null,
+      "loan_purpose": null,
+      "loan_purpose_detail": null,
+      "loan_program": null
+    },
+    "income": {
+      "base_monthly": 5416.67,
+      "bonus_monthly": 1250.0,
+      "bonus_ytd": null,
+      "commission_monthly": 2140.0,
+      "overtime_monthly": 385.5,
+      "other_monthly": 450.0,
+      "stated_monthly_total": 9642.17
+    }
+  },
+  "validation": {
+    "consistent": true,
+    "discrepancies": []
+  }
+}
+[exit code: 0]

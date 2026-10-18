@@ -1,0 +1,31 @@
+$ mortgage-extract fixtures/documents/income_missing_bonus.txt --mode replay -v
+mortgage_extractor.pipeline: classify: model=claude-haiku-4-5 in=1536 out=97 type=income_verification
+mortgage_extractor.pipeline: extract: model=claude-haiku-4-5 in=3695 out=190 tool=extract_income_verification
+{
+  "extraction": {
+    "borrower": {
+      "full_name": "Daniel R. Whitfield",
+      "coborrower_name": null,
+      "ssn_last4": null,
+      "date_of_birth": null,
+      "email": null,
+      "phone": null
+    },
+    "property": null,
+    "loan": null,
+    "income": {
+      "base_monthly": 5673.08,
+      "bonus_monthly": null,
+      "bonus_ytd": null,
+      "commission_monthly": null,
+      "overtime_monthly": null,
+      "other_monthly": null,
+      "stated_monthly_total": null
+    }
+  },
+  "validation": {
+    "consistent": true,
+    "discrepancies": []
+  }
+}
+[exit code: 0]

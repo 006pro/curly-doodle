@@ -1,0 +1,59 @@
+Environment note — Evaluation and Observability capstone
+Author:   Narendran Chakkrapani <n.chakkrapani@accenture.com>
+Date run: 2026-10-18
+
+$ python --version
+Python 3.11.9
+
+$ ver
+Microsoft Windows [Version 10.0.26200.9711]      (Windows 11 Pro, 64-bit)
+
+Shells: Git Bash (captures via `| tee` / `>`, UTF-8) and Windows PowerShell 5.1 (screenshots).
+
+Systems run (final-exercise solution/ of each course project)
+-------------------------------------------------------------
+System 1  Build a Validated, Routed Insurance Policy Extraction Pipeline/04-hitl-routing/solution
+          venv: <project>\.venv                      (as instructed)
+System 2  Build a Resilient Mortgage Document Extraction System/04-validate-mathematical-consistency/solution
+          venv: <repo>\.venvs\mortgage               (see "Deviations" #2)
+System 3  Investigate Supply Chain Risk with Multi-Source Synthesis/03-resilient-coordinator/solution
+          venv: <repo>\.venvs\supply                 (see "Deviations" #2)
+
+Setup, per system (run from the solution folder):
+    py -3.11 -m venv <venv>
+    <venv>\Scripts\python -m pip install -e ".[dev]"
+
+Live API usage
+--------------
+Ran live: YES
+  - System 1: full `pipeline` run over data/policies/ (01-policy-pipeline/pipeline-run.txt)
+              and both `extract` runs of the perturbation (perturbations/s1-*.txt)
+  - System 2: one `--mode record` run of the perturbation (perturbations/s2-corrected-total-record.txt)
+  - System 3: offline only (`--offline`, recorded news extraction), as instructed.
+Key: ANTHROPIC_API_KEY loaded from the repo-root .env (gitignored; never committed).
+
+Deviations from the stock instructions (and why)
+------------------------------------------------
+1. TLS: this network intercepts HTTPS, so pip/HF/Anthropic failed with
+   CERTIFICATE_VERIFY_FAILED. I exported the Windows trusted root + CA stores to a PEM bundle
+   and pointed PIP_CERT / SSL_CERT_FILE / REQUESTS_CA_BUNDLE at it. Verification stayed ON.
+2. Windows MAX_PATH (260 chars): installing `anthropic` and `torch` under the long project
+   folder names failed with "[Errno 2] No such file or directory ... enable-long-paths".
+   Systems 2 and 3 therefore use venvs at the short path <repo>\.venvs\ (gitignored). Same
+   packages, same `pip install -e ".[dev]"`; only the venv location differs.
+3. API endpoint: the course key is a Vocareum key served at https://claude.vocareum.com
+   (ANTHROPIC_BASE_URL). That proxy enables the snapshot `claude-haiku-4-5-20251001` but rejects
+   the bare alias `claude-haiku-4-5` ("Model 'claude-haiku-4-5' is not available for your
+   organization"). System 1 pins the alias with no CLI flag, so live System 1 commands run through
+   tools/live_shim.py, which rewrites only that alias to its own snapshot and then calls the
+   unmodified CLI `main()`. The reviewer model `claude-sonnet-4-6` was available unchanged.
+   System 2 has a `--model` flag, so I passed `--model claude-haiku-4-5-20251001` directly.
+   No reference source file was edited.
+4. Record mode (System 2) writes new cache files into fixtures/recorded_responses/. The two files
+   it created were moved to perturbations/recorded/ so the shipped fixtures stay byte-identical
+   (listing before the run: perturbations/inputs/recorded_responses_before.txt).
+5. A copy of the provided calibration_report.py was placed in the System 1 solution folder so it
+   runs "from the policy-pipeline project folder" exactly as its docstring says.
+
+Screenshots: real captures of a dedicated console window (Win32 PrintWindow) running the
+command shown on its first line; one or more per system under */screenshots/.
